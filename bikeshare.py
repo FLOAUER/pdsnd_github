@@ -216,7 +216,7 @@ def trip_duration_stats(df):
         mtt_days  = str(int(mtt//86400))
         mtt_hours = str(int((mtt%86400)//3600))
         mtt_mins  = str(int(((mtt%86400)%3600)//60))
-        mtt_secs  = str((mtt%60).round(2))
+        mtt_secs  = str(round(mtt%60, 2))
       
         if mtt <=60:
             mean_travel_time = mtt_secs +' sec(s)'
