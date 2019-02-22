@@ -216,7 +216,7 @@ def trip_duration_stats(df):
         mtt_days  = str(int(mtt//86400))
         mtt_hours = str(int((mtt%86400)//3600))
         mtt_mins  = str(int(((mtt%86400)%3600)//60))
-        mtt_secs  = str((mtt%60).round(2))
+        mtt_secs  = str(round(mtt%60, 2))
       
         if mtt <=60:
             mean_travel_time = mtt_secs +' sec(s)'
@@ -301,18 +301,17 @@ def user_stats(df):
         if yob_recent >= 2015:
             veryyoung = '   OMG... Pretty young for hiring a bike with '+str(2017 - yob_recent)+' year of age! ;)'
         print('The most recent year of birth is: '+str(yob_recent)+' '+veryyoung)
-        # most common year(s) of birth incl. check for multiple max common years
+        # most common year(s) of birth 
         yob_common = df1['Birth Year'].value_counts()
         max_value = yob_common.max()
         counter = yob_common[yob_common.values == max_value].count() 
-        if counter == 1:
-            print('The most common year of birth is: '+str(yob_common.idxmax())) # found on https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.idxmax.html
-        else:
-            yob_common_max = yob_common.head(counter)
-            yob_common_max_df = yob_common_max.to_frame() # found on https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.to_frame.html
-            print('The following years are the most common: ')
-            print(yob_common_max_df.index.tolist()) # found on https://stackoverflow.com/questions/17241004/how-do-i-get-a-dataframe-index-series-column-as-an-array-or-list
+        yob_common_max = yob_common.head(counter)
+        yob_common_max_df = yob_common_max.to_frame() # found on https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.to_frame.html
+        common_years = yob_common_max_df.index.tolist()   # found on https://stackoverflow.com/questions/17241004/how-do-i-get-a-dataframe-index-series-column-as-an-array-or-list
+        common_years_str = ''.join(map(str, common_years)) # found on https://stackoverflow.com/questions/12453580/concatenate-item-in-list-to-strings/12453584
+        print('The most common year(s) of birth is: {}'.format(common_years_str)) 
         
+
     else:
         print('Sorry! No data for date of birth available!\n')
     print("\nThis took %s seconds." % (time.time() - start_time))
