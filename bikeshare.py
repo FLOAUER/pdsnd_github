@@ -307,9 +307,11 @@ def user_stats(df):
         counter = yob_common[yob_common.values == max_value].count() 
         yob_common_max = yob_common.head(counter)
         yob_common_max_df = yob_common_max.to_frame() # found on https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.to_frame.html
-        print('The most common year(s) is: ')
-        print(yob_common_max_df.index.tolist()) # found on https://stackoverflow.com/questions/17241004/how-do-i-get-a-dataframe-index-series-column-as-an-array-or-list
+        common_years = yob_common_max_df.index.tolist()   # found on https://stackoverflow.com/questions/17241004/how-do-i-get-a-dataframe-index-series-column-as-an-array-or-list
+        common_years_str = ''.join(map(str, common_years)) # found on https://stackoverflow.com/questions/12453580/concatenate-item-in-list-to-strings/12453584
+        print('The most common year(s) of birth is: {}'.format(common_years_str)) 
         
+
     else:
         print('Sorry! No data for date of birth available!\n')
     print("\nThis took %s seconds." % (time.time() - start_time))
